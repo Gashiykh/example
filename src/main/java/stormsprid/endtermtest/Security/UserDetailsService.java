@@ -18,7 +18,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         stormsprid.endtermtest.Entity.User user = userRepository.findByUsername(username).orElseThrow(() ->
-         new UsernameNotFoundException("user not found:" + username));
+         new UsernameNotFoundException("Не найден:" + username));
         return  User.builder().username(user.getUsername()).password(user.getPassword()).build();
     }
 }

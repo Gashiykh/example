@@ -23,6 +23,8 @@ public class Task {
 
     private String title;
 
+    private String imagePath;
+
     private String description;
 
     public Long getId() {
@@ -47,5 +49,13 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

@@ -55,5 +55,13 @@ public class TaskController {
            return "redirect:/tasks";
     }
 
+    @PostMapping("/add")
+    public String addTask(@ModelAttribute Task task, @RequestParam("image") MultipartFile image) throws IOException {
+        String imagePath = "uploads/" + image.getOriginalFilename();
+        image.transferTo(new File(imagePath)); 
+        task.setImagePath(imagePath);
+        taskRepository.save(task);
+        return "redirect:/tasks";
+    }
 
 }
