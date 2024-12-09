@@ -1,8 +1,24 @@
-<a th:href="@{/tasks/add}">Add Task</a>
-<ul>
-    <li th:each="task : ${tasks}">
-        <span th:text="${task.title}">Title</span>
-        <a th:href="@{/tasks/edit/{id}(id=${task.id})}">Edit</a>
-        <a th:href="@{/tasks/delete/{id}(id=${task.id})}">Delete</a>
-    </li>
-</ul>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.title}"></td>
+        <td th:text="${task.description}"></td>
+        <td>
+            <img th:src="@{/uploads/{imagePath}(imagePath=${task.imagePath})}" alt="Task Image" style="max-width: 100px; max-height: 100px;">
+        </td>
+        <td>
+            <a th:href="@{/tasks/edit/{id}(id=${task.id})}">Edit</a>
+            <a th:href="@{/tasks/delete/{id}(id=${task.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+    <a th:href="@{/tasks/add}">Add New Task</a>
+
+</table>

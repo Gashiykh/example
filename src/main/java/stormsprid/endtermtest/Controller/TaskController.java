@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import stormsprid.endtermtest.Entity.Task;
 import stormsprid.endtermtest.Repository.TaskRepository;
+import java.io.File;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/tasks")
@@ -31,10 +34,14 @@ public class TaskController {
 
 
     @PostMapping("/add")
-    public String addTask(@ModelAttribute Task task){
+    public String addTask(@ModelAttribute Task task, @RequestParam("image") MultipartFile image) throws IOException {
+        String imagePath = "uploads/" + image.getOriginalFilename();
+        image.transferTo(new File(imagePath));
+        task.setImagePath(imagePath);
         taskRepository.save(task);
         return "redirect:/tasks";
     }
+
 
     @GetMapping("/edit/{id}")
     public String ShowEditTask(@PathVariable Long id,Model model){
@@ -55,13 +62,5 @@ public class TaskController {
            return "redirect:/tasks";
     }
 
-    @PostMapping("/add")
-    public String addTask(@ModelAttribute Task task, @RequestParam("image") MultipartFile image) throws IOException {
-        String imagePath = "uploads/" + image.getOriginalFilename();
-        image.transferTo(new File(imagePath)); 
-        task.setImagePath(imagePath);
-        taskRepository.save(task);
-        return "redirect:/tasks";
-    }
 
 }
