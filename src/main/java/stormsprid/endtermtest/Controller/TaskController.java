@@ -35,10 +35,24 @@ public class TaskController {
 
     @PostMapping("/add")
     public String addTask(@ModelAttribute Task task, @RequestParam("image") MultipartFile image) throws IOException {
-        String imagePath = "uploads/" + image.getOriginalFilename();
-        image.transferTo(new File(imagePath));
-        task.setImagePath(imagePath);
+        if (image.isEmpty()) {
+            throw new IOException("Файл не найден");
+        }
+
+        String uploadDir = "C:/Users/gashi/OneDrive/Рабочий стол/0010101/uploads/";
+        File uploadFolder = new File(uploadDir);
+        if (!uploadFolder.exists()) {
+            uploadFolder.mkdirs();
+        }
+
+        String absolutePath = uploadDir + image.getOriginalFilename();
+        image.transferTo(new File(absolutePath));
+
+        String relativePath = "/uploads/" + image.getOriginalFilename();
+        task.setImagePath(relativePath);
+
         taskRepository.save(task);
+
         return "redirect:/tasks";
     }
 

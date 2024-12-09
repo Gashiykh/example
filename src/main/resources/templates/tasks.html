@@ -1,9 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tasks</title>
+</head>
+<body>
+<h1>Task List</h1>
+<a th:href="@{/tasks/add}">Add New Task</a>
 <table>
     <thead>
     <tr>
         <th>Title</th>
         <th>Description</th>
         <th>Image</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -11,7 +20,7 @@
         <td th:text="${task.title}"></td>
         <td th:text="${task.description}"></td>
         <td>
-            <img th:src="@{/uploads/{imagePath}(imagePath=${task.imagePath})}" alt="Task Image" style="max-width: 100px; max-height: 100px;">
+            <img th:src="${task.imagePath}" alt="Task Image" style="max-width: 100px; max-height: 100px;">
         </td>
         <td>
             <a th:href="@{/tasks/edit/{id}(id=${task.id})}">Edit</a>
@@ -19,6 +28,6 @@
         </td>
     </tr>
     </tbody>
-    <a th:href="@{/tasks/add}">Add New Task</a>
-
 </table>
+</body>
+</html>
